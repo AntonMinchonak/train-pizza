@@ -14,14 +14,15 @@ export const itemListSlice = createSlice({
     grow: true,
     filteredList: [],
     activeFilter: 0,
-    searchValue:"",
+    searchValue: "",
+    currentPage: 1,
+    pageList:[],
   },
   reducers: {
-
     sortList(state, action) {
       state.activeSort = action.payload.activeSort;
       state.grow = action.payload.grow;
-      let newList = [...state.list]
+      let newList = [...state.list];
       if (state.activeSort === "цене") newList.sort((a, b) => b.price - a.price);
       if (state.activeSort === "алфавиту") {
         newList.sort((a, b) => {
@@ -34,21 +35,34 @@ export const itemListSlice = createSlice({
       if (!state.grow) newList.reverse();
       state.list = newList;
     },
-    
+
     filterList(state, action) {
-      if (action.payload.filter !== undefined)state.activeFilter = action.payload.filter;
+      if (action.payload.filter !== undefined) state.activeFilter = action.payload.filter;
       state.filteredList = state.list.filter((item) => {
-           if (state.searchValue.length > 0 && !item.title.toUpperCase().includes(state.searchValue)) {
-             return false
-           }
-           if (state.activeFilter === 0) return true;
-           return item.category === state.activeFilter;
-         });
+        if (state.searchValue.length > 0 && !item.title.toUpperCase().includes(state.searchValue)) {
+          return false;
+        }
+        if (state.activeFilter === 0) return true;
+        return item.category === state.activeFilter;
+      });
     },
 
     searchList(state, action) {
-      state.searchValue = action.payload.searchValue
-    }
+      state.searchValue = action.payload.searchValue;
+    },
+
+    setPage(state, action) {
+      state.currentPage = action.payload.currentPage
+      let newPage = [];
+      state.filteredList.forEach((item, index) => {
+        if ((index + 1) / 8 <= state.currentPage && state.currentPage - 1 <= index / 8) newPage.push(item);
+      });
+      state.pageList = newPage
+      console.log(state.pageList);
+      console.log(newPage);
+      console.log(state.filteredList);
+      
+    },
   },
   extraReducers: {
     [fetchPizzas.fulfilled]: (state, action) => {
@@ -57,6 +71,6 @@ export const itemListSlice = createSlice({
   },
 });
 
-export const { filterList, sortList, searchList } = itemListSlice.actions;
+export const { filterList, sortList, searchList, setPage } = itemListSlice.actions;
 export default itemListSlice.reducer;
 

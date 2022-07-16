@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { sortList, filterList } from "../redux/slices/itemListSlice";
+import { sortList, filterList, setPage } from "../redux/slices/itemListSlice";
 
 export default function Sort() {
   const dispatch = useDispatch()
@@ -17,6 +17,7 @@ export default function Sort() {
         <button onClick={() => {
           dispatch(sortList({ activeSort: activeSort, grow: !grow }));
           dispatch(filterList({ filter: undefined }));
+          dispatch(setPage({ currentPage: 1 }));
         }} style={grow ? {} : { transform: "rotate(180deg)" }}>
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -35,7 +36,8 @@ export default function Sort() {
               <li
                 onClick={() => {
                   dispatch(sortList({activeSort:item, grow:grow}));
-                  dispatch(filterList({filter:undefined}));
+                  dispatch(filterList({ filter: undefined }));
+                  dispatch(setPage({ currentPage: 1 }));
                   schangeVisibility(!showPopup);
                   // if(activeSort !== item)  setGrow(true);
                 }}

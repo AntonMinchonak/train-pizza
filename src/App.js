@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { fetchPizzas, sortList, filterList } from "./redux/slices/itemListSlice";
+import { fetchPizzas, sortList, filterList,setPage } from "./redux/slices/itemListSlice";
 
 export const AppContext = React.createContext();
 
@@ -22,6 +22,7 @@ function App() {
     await dispatch(fetchPizzas());
     await dispatch(sortList({activeSort: "популярности", grow:true}));
     await dispatch(filterList({filter:0}));
+    await dispatch(setPage({ currentPage: 1 }));
    })()
   }, [dispatch]);
 

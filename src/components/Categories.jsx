@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector,useDispatch } from "react-redux/es/exports";
-import { filterList } from "../redux/slices/itemListSlice";
+import { filterList, setPage } from "../redux/slices/itemListSlice";
+
 
 export default function Categories() {
   let dispatch = useDispatch()
@@ -14,7 +15,8 @@ export default function Categories() {
           return (
             <li
               onClick={() => {
-                dispatch(filterList({filter:index}));
+                dispatch(filterList({ filter: index }));
+                dispatch(setPage({ currentPage: 1 }));
               }}
               key={index}
               className={activeFilter === index ? "active" : ""}

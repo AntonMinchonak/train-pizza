@@ -1,14 +1,14 @@
 import React from 'react'
 import searchImg from "../assets/img/akar-icons-search.svg";
 import { useSelector, useDispatch } from 'react-redux';
-import { searchList, filterList } from '../redux/slices/itemListSlice';
+import { searchList, filterList, setPage } from "../redux/slices/itemListSlice";
 
 
 export default function Search() {
 
   let dispatch = useDispatch();
   let searchValue = useSelector((state) => state.list.searchValue);
-  console.log(searchValue);
+
   const valueRef = React.useRef()
 
   return (
@@ -19,7 +19,7 @@ export default function Search() {
         onInput={() => {
           dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
           dispatch(filterList({ filter: undefined }));
-
+          dispatch(setPage({ currentPage: 1 }));
         }}
         className="search-input"
         type="text"
@@ -30,6 +30,7 @@ export default function Search() {
           valueRef.current.value = "";
           dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
           dispatch(filterList({ filter: undefined }));
+          dispatch(setPage({ currentPage: 1 }));
         }}
       >
         {searchValue.length > 0 && ("✖")}

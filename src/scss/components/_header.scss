@@ -1,0 +1,64 @@
+@import '../variables.scss';
+
+.header {
+  border-bottom: 1px solid $gray-line;
+  padding: 40px 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap:20px;
+  }
+
+    .search-input {
+      border: none;
+      width: 100%;;
+    }
+
+    .search-input-wrap {
+      width: 300px;
+      margin: 0 20px 0 0;
+      border-radius: 10px;
+      border: 1px solid rgb(189, 189, 189);
+      padding: 10px 20px;
+      display: flex;
+      gap:10px;
+      align-items: center;
+
+      img {
+        width: 20px;
+      }
+
+      button {
+        border: none;
+        background: none;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+
+  
+
+  &__logo {
+    display: flex;
+    margin-right: auto;
+
+    img {
+      margin-right: 15px;
+    }
+
+    h1 {
+      color: #181818;
+      font-size: 24px;
+      letter-spacing: 1%;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    p {
+      color: #7b7b7b;
+    }
+  }
+}

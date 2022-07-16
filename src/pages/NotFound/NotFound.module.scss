@@ -1,0 +1,11 @@
+.button-back {
+    border: 1px solid gray;
+    background: none;
+    color:gray;
+    margin-top: 40px;
+
+    &:hover {
+        background-color:black;
+        color:white;
+    }
+}

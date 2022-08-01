@@ -57,11 +57,7 @@ export const itemListSlice = createSlice({
       state.filteredList.forEach((item, index) => {
         if ((index + 1) / 8 <= state.currentPage && state.currentPage - 1 <= index / 8) newPage.push(item);
       });
-      state.pageList = newPage
-      console.log(state.pageList);
-      console.log(newPage);
-      console.log(state.filteredList);
-      
+      state.pageList = newPage     
     },
   },
   extraReducers: {

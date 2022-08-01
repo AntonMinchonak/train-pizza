@@ -12,7 +12,7 @@ export default function Pagination({ scrollBack, upper }) {
       <div className="pagination">
         <div
           onClick={() => {
-            scrollBack();
+            if(upper===undefined) scrollBack();
             return currentPage > 1 ?  dispatch(setPage({currentPage:currentPage - 1})) : currentPage;
           }}
           className="page-button page-arrow"
@@ -36,7 +36,7 @@ export default function Pagination({ scrollBack, upper }) {
 
         <div
           onClick={() => {
-            scrollBack();
+            if (upper === undefined) scrollBack();
             return currentPage < Math.round(filteredList.length / 8) ?  dispatch(setPage({currentPage:currentPage + 1})) : currentPage;
           }}
           className="page-button page-arrow"

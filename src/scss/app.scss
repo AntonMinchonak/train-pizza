@@ -289,9 +289,8 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 210px;
-
         border-color: darken($color: $gray-line, $amount: 10);
+        gap:10px;
 
         span {
           color: darken($color: $gray-line, $amount: 20);
@@ -309,7 +308,6 @@ body {
         }
 
         svg {
-          margin-right: 12px;
           path {
             fill: transparent;
             stroke-width: 2;

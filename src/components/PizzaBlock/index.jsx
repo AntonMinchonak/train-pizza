@@ -7,9 +7,6 @@ export default function PizzaBlock({ info }) {
 
     return (
       <div className="pizza-block">
-        {/* <div className="pizza-block__rating">
-          <span>{info.rating}</span>
-        </div> */}
         <img className="pizza-block__image" src={info.image} alt="Pizza" />
         <h4 className="pizza-block__title">{"Пицца " + info.title}</h4>
         <div className="pizza-block__selector">
@@ -34,7 +31,7 @@ export default function PizzaBlock({ info }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">{"от " + info.price + "₽"}</div>
-          <Button outline></Button>
+          <Button outline info={info} size={size} type={type}></Button>
         </div>
       </div>
     );  

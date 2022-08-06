@@ -7,7 +7,7 @@ export const fetchPizzas = createAsyncThunk("list/fetchPizzas",
 });
 
 let cartList =[]
-if (sessionStorage.getItem("cartList").length > 0) {
+if (sessionStorage.getItem("cartList")!== null && sessionStorage.getItem("cartList").length > 0) {
   cartList = JSON.parse(sessionStorage.getItem("cartList"));
 }
 

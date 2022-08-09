@@ -3,15 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { setTotalOfferCount, setTotalOfferPrice, setCartList } from '../../redux/slices/itemListSlice';
 import { useDispatch } from 'react-redux/es/exports';
 
-export default function ButtonSubmit({searchParams, text, to, disabled, finish}) {
+export default function ButtonSubmit({searchParams, text, to, disabled, finish, setWrongForm}) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     return (
       <button
-        disabled={disabled}
+        // disabled={disabled}
         type="submit"
-        onClick={() => {
+        onClick={(evt) => {
+          evt.preventDefault()
+          if (disabled) {
+            if (setWrongForm) setWrongForm(true);
+            return
+          }
             navigate(`/${to}?${searchParams}`);
             if (finish) {
                 sessionStorage.setItem("cartList", [])
@@ -20,7 +25,7 @@ export default function ButtonSubmit({searchParams, text, to, disabled, finish})
                 dispatch(setCartList({ clear: true }));
                 dispatch(setTotalOfferCount());
                 dispatch(setTotalOfferPrice());
-            }
+          }
         }}
         className="button"
       >

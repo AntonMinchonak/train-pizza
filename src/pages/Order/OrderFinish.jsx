@@ -33,7 +33,7 @@ export default function OrderFinish() {
             <span>Адрес:</span> г.{searchParams.get("city")}, ул.{searchParams.get("street")}, д.{searchParams.get("house")}, кв.{searchParams.get("room")}
           </div>
           <div className={css["text-field"]}>
-            <span>Время доставки:</span> {searchParams.get("orderHour")} : {searchParams.get("orderMinute")}
+            <span>Время доставки:</span> {searchParams.get("orderHour")} : {searchParams.get("orderMinute")} ({searchParams.get("time")})
           </div>
           <div className={css["text-field"]}>
             <span>Способ оплаты:</span> {searchParams.get("paper") ? "Наличными" : "По карте"} {searchParams.get("place") ? "при получении" : "онлайн"}

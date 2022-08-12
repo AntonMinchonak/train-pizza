@@ -1,0 +1,31 @@
+@import '../variables';
+
+.footer {
+    padding: 60px 0;
+    color:white;
+    background: rgb(24, 24, 23);
+    margin-top: 40px;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+}
+
+.footer-contacts {
+    color: #7b7b7b;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+
+    & div:first-child {
+        color: #949494;
+        font-size: 24px;
+        letter-spacing: 1%;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+}

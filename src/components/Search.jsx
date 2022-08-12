@@ -31,6 +31,7 @@ export default function Search() {
           dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
           dispatch(filterList({ filter: undefined }));
           dispatch(setPage({ currentPage: 1 }));
+          valueRef.current.focus()
         }}
       >
         {searchValue.length > 0 && ("✖")}

@@ -63,7 +63,7 @@ export default function CartBlock({ info, order }) {
         }
       </div>
     { !order&&  <div className="cart__item-price">
-        <b>{info.price} ₽</b>
+        <b>{info.price*info.countOffer} ₽</b>
       </div>}
       {!order && <div
         onClick={() => {

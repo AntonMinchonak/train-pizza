@@ -1,6 +1,7 @@
 // import "./app.css";
 import "./scss/app.scss";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -47,6 +48,7 @@ function App() {
             <Route path="order-go-back" element={<OrderGoBack />}></Route>
           </Routes>
         </div>
+        <Footer />
       </AppContext.Provider>
     </div>
   );

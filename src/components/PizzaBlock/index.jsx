@@ -1,14 +1,18 @@
 import React from "react"
 import Button from "../Button"
+import { Link } from "react-router-dom";
 
 export default function PizzaBlock({ info }) {
   const [size, setSize] = React.useState(0)
   const [type, setType] = React.useState(0);
 
+
     return (
       <div className="pizza-block">
-        <img className="pizza-block__image" src={info.image} alt="Pizza" />
-        <h4 className="pizza-block__title">{"Пицца " + info.title}</h4>
+        <Link to={`detail-page/${info.id}`}>
+          <img className="pizza-block__image" src={info.image} alt="Pizza" />
+          <h4 className="pizza-block__title">{"Пицца " + info.title}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
             {info.types.map((item, index) => {

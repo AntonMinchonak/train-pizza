@@ -10,13 +10,16 @@ function Button(props) {
   const cartList = useSelector((state) => state.list.cartList);
   
   let countInfo = 0
-  let isInCart = cartList.find((item) => {
-    if (props.info===undefined) return false
+
+  let inCart = cartList.filter((item) => {
+    if (props.info === undefined) return false;
     return item.id === props.info.id;
   });
-  if (isInCart) countInfo = isInCart.countOffer;
-
     
+  inCart.forEach(item => {
+    countInfo += item.countOffer;
+  })
+
   let [count, addCount] = React.useState(countInfo);
     
     if (props.cart) {

@@ -1,4 +1,4 @@
-// import "./app.css";
+
 import "./scss/app.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,15 +12,15 @@ import NotFound from "./pages/NotFound";
 import OrderPayment from "./pages/Order/OrderPayment"
 import OrderContacts from "./pages/Order/OrderContacts";
 import OrderGoBack from "./pages/Order/OrderGoBack";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import DetailPage from "./pages/DetailPage";
+import { useDispatch } from "react-redux/es/exports";
 import { fetchPizzas, sortList, filterList,setPage } from "./redux/slices/itemListSlice";
 
 export const AppContext = React.createContext();
 
 function App() {
-  const [searchList, setSearchList] = React.useState([]);
+  // const [searchList, setSearchList] = React.useState([]);
 
-  const list = useSelector(state => state.list.list)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
@@ -32,13 +32,14 @@ function App() {
    })()
   }, [dispatch]);
 
+
   return (
     <div className="wrapper">
-      <AppContext.Provider value={{ list, searchList, setSearchList }}>
+      {/* <AppContext.Provider value={{ list, searchList, setSearchList }}> */}
         <Header />
         <div className="content">
           <Routes>
-            <Route index element={<Home searchList={searchList} />}></Route>
+            <Route index element={<Home />}></Route>
             <Route path="cart" element={<Cart />}></Route>
             <Route path="*" element={<NotFound />}></Route>
             <Route path="order-adress" element={<OrderAdress />}></Route>
@@ -46,10 +47,11 @@ function App() {
             <Route path="order-contacts" element={<OrderContacts />}></Route>
             <Route path="order-finish" element={<OrderFinish />}></Route>
             <Route path="order-go-back" element={<OrderGoBack />}></Route>
+            <Route path="detail-page/:id" element={<DetailPage />}></Route>
           </Routes>
         </div>
         <Footer />
-      </AppContext.Provider>
+      {/* </AppContext.Provider> */}
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector,useDispatch } from "react-redux/es/exports";
 import { filterList, setPage } from "../redux/slices/itemListSlice";
+import { RootState } from "../redux/store";
 
 
-export default function Categories() {
+ const Categories = React.memo(function Categories(): JSX.Element {
   let dispatch = useDispatch()
-  const activeFilter = useSelector((state) => state.list.activeFilter);
+  const activeFilter = useSelector((state:RootState) => state.list.activeFilter);
   let list = ["Все", "Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"];
 
   return (
@@ -28,4 +29,5 @@ export default function Categories() {
       </ul>
     </div>
   );
-}
+})
+export default Categories

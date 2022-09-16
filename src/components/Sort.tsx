@@ -1,19 +1,22 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { sortList, filterList, setPage } from "../redux/slices/itemListSlice";
+import { RootState } from '../redux/store';
 
-export default function Sort() {
+const Sort =  React.memo(function Sort() {
   const dispatch = useDispatch()
 
-  const list = ["популярности", "цене", "алфавиту"];
-  const activeSort = useSelector((state) => state.list.activeSort);
-  const grow = useSelector((state) => state.list.grow);
+  const list:("популярности"| "цене"| "алфавиту")[] = ["популярности", "цене", "алфавиту"];
+  const activeSort = useSelector((state: RootState) => state.list.activeSort);
+  const grow = useSelector((state: RootState) => state.list.grow);
   const [showPopup, changeVisibility] = React.useState(false);
-  const popupRef = React.useRef()
-  const popupBtnRef = React.useRef();
+  const popupRef = React.useRef<HTMLDivElement>(null)
+  const popupBtnRef = React.useRef<HTMLSpanElement>(null);
 
-  document.body.onclick = (evt) => {
-    if (!evt.path.includes(popupRef.current) && !evt.path.includes(popupBtnRef.current)) {
+
+  document.body.onclick = (evt: MouseEvent) => {
+    const _evt = evt as MouseEvent & {path: Node[];}
+    if (popupRef.current && popupBtnRef.current && !_evt.path.includes(popupRef.current) && !_evt.path.includes(popupBtnRef.current)) {
       changeVisibility(false);
     }
   }
@@ -62,4 +65,6 @@ export default function Sort() {
       </div>
     </div>
   );
-}
+})
+
+export default Sort 

@@ -1,8 +1,9 @@
 import React from "react"
 import Button from "../Button"
 import { Link } from "react-router-dom";
+import { pizzaItemType } from "../../App";
 
-export default function PizzaBlock({ info }) {
+export default function PizzaBlock({ info }: { info:pizzaItemType }) {
   const [size, setSize] = React.useState(0)
   const [type, setType] = React.useState(0);
 

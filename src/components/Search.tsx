@@ -7,9 +7,9 @@ import { searchList, filterList, setPage } from "../redux/slices/itemListSlice";
 export default function Search() {
 
   let dispatch = useDispatch();
-  let searchValue = useSelector((state) => state.list.searchValue);
+  let searchValue = useSelector((state: {list: any}) => state.list.searchValue);
 
-  const valueRef = React.useRef()
+  const valueRef = React.useRef<HTMLInputElement>(null)
 
   return (
     <div className="search-input-wrap">
@@ -17,7 +17,8 @@ export default function Search() {
       <input
         ref={valueRef}
         onInput={() => {
-          dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
+          
+          dispatch(searchList({ searchValue: valueRef.current?.value.toUpperCase() }));
           dispatch(filterList({ filter: undefined }));
           dispatch(setPage({ currentPage: 1 }));
         }}
@@ -27,11 +28,14 @@ export default function Search() {
       />
       <button
         onClick={() => {
-          valueRef.current.value = "";
-          dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
-          dispatch(filterList({ filter: undefined }));
-          dispatch(setPage({ currentPage: 1 }));
-          valueRef.current.focus()
+          if (!valueRef.current) return
+          
+            valueRef.current.value = "";
+            dispatch(searchList({ searchValue: valueRef.current.value.toUpperCase() }));
+            dispatch(filterList({ filter: undefined }));
+            dispatch(setPage({ currentPage: 1 }));
+            valueRef.current.focus()
+          
         }}
       >
         {searchValue.length > 0 && ("✖")}

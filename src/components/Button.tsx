@@ -2,21 +2,33 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalOfferCount, setTotalOfferPrice, setCartList } from "../redux/slices/itemListSlice";
+import { pizzaItemType, cartItemType } from "../App";
+import { RootState } from "../redux/store";
 
-function Button(props) {
+
+type buttonProps = {
+  info: pizzaItemType;
+  cart?: boolean;
+  size: number;
+  type: number;
+  outline?: boolean;
+  children?: any
+}
+
+function Button(props:buttonProps) {
   const dispatch = useDispatch()
-  const totalOfferCount = useSelector((state) => state.list.totalOfferCount);
-  const totalOfferPrice = useSelector((state) => state.list.totalOfferPrice);
-  const cartList = useSelector((state) => state.list.cartList);
+  const totalOfferCount = useSelector((state:RootState) => state.list.totalOfferCount);
+  const totalOfferPrice = useSelector((state:RootState) => state.list.totalOfferPrice);
+  const cartList = useSelector((state:RootState) => state.list.cartList);
   
   let countInfo = 0
 
-  let inCart = cartList.filter((item) => {
+  let inCart = cartList.filter((item:cartItemType) => {
     if (props.info === undefined) return false;
     return item.id === props.info.id;
   });
     
-  inCart.forEach(item => {
+  inCart.forEach((item:cartItemType) => {
     countInfo += item.countOffer;
   })
 

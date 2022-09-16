@@ -5,17 +5,20 @@ import { useSearchParams } from "react-router-dom";
 import ButtonSubmit from "./ButtonSubmit";
 import CartBlock from "../../components/CartBlock";
 import { useSelector } from "react-redux/es/exports";
-  
+import { cartItemType } from "../../App";
+
 export default function OrderFinish() {
   let [searchParams] = useSearchParams();
-  let totalOfferPrice = useSelector(state => state.list.totalOfferPrice);
+  let totalOfferPrice = useSelector((state:{list:any})=> state.list.totalOfferPrice);
 
   let orderInfo = []
-  for (let entry of searchParams.entries()) {
+  
+  for (let entry of Array.from(searchParams.entries())) {
       orderInfo.push(entry)
   }
-    
-  let cartList =JSON.parse(sessionStorage.getItem("cartList"));
+  let cartList
+  const getCartList = sessionStorage.getItem("cartList")
+  if (getCartList) cartList =JSON.parse(getCartList);
 
     return (
       <div className={css.container + " container"}>
@@ -24,7 +27,7 @@ export default function OrderFinish() {
         </Link>
         <h2 className={"content__title " + css["content__title"]}>Подтверждение заказа</h2>
         <div className={css["cart-list"]}>
-          {cartList.map((item, i) => (
+          {cartList.map((item:cartItemType, i:number) => (
             <CartBlock key={i} info={item} order />
           ))}
         </div>
@@ -44,7 +47,7 @@ export default function OrderFinish() {
           <div className={css["text-field"]}>
             <span>Общая стоимость:</span> {totalOfferPrice} рублей
           </div>
-          <ButtonSubmit finish to="order-go-back" searchParams="" text="Заказать" />
+          <ButtonSubmit finish to="order-go-back" text="Заказать" />
         </form>
       </div>
     );

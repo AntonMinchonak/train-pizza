@@ -4,16 +4,26 @@ import Button from "../../components/Button";
 import { useSelector } from "react-redux";
 import css from './DetailPage.module.scss'
 
+// type defItem = {title:string
+// image:string
+//   price: number
+//   sizes:number[]
+// types:number[]
+// category:number
+// rating:number
+// countOffer:number
+// id:number}
 export default function DetailPage() {
-  const params = useParams();
-  const items = useSelector((state) => state.list.list);
+  const params: any = useParams();
+  const items= useSelector((state:any) => state.list.list);
   const [size, setSize] = React.useState(0);
   const [type, setType] = React.useState(0);
-  const info = items.find((item) => item.id === +params.id);
+  const info: any = items.find((item: { id: number }) => item.id === +params.id);
 
-    if (!info) {
-        return 'Загрузка...'
-    }
+  if (!info) {
+     return <div className="container">'Загрузка...'</div>
+  }
+  
   return (
     <div className="container">
       <Link className={css["go-back-btn"]} to="/">Назад</Link>
@@ -24,7 +34,7 @@ export default function DetailPage() {
 
           <div className={css["pizza-block__selector"]}>
             <ul>
-              {info.types.map((item, index) => {
+              {info.types.map((item: number, index: number) => {
                 return (
                   <li onClick={() => setType(index)} className={type === index ? css["active"] : ""} key={index}>
                     {item === 0 ? "тонкое" : "традиционное"}
@@ -33,7 +43,7 @@ export default function DetailPage() {
               })}
             </ul>
             <ul>
-              {info.sizes.map((item, index) => {
+              {info.sizes.map((item: number, index: number) => {
                 return (
                   <li onClick={() => setSize(index)} key={index} className={size === index ? css["active"] : ""}>
                     {item} см.

@@ -18,7 +18,15 @@ function Header() {
         </Link>
         <Search />
 
-        <Button cart />
+        <Button info={{image: 'string',
+  title: "string",
+  sizes: [],
+  types: [],
+  countOffer: 0,
+  price: 0,
+  rating: 0,
+  id: 0,
+  category: 0}} cart type={0} size={0} />
       </div>
     </div>
   );

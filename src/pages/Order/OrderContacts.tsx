@@ -10,8 +10,8 @@ export default function OrderContacts() {
   let [mail, setMail] = React.useState(searchParams.get("mail") || "");
   let [wrongForm, setWrongForm] = React.useState(false);
 
-  const telRef = React.useRef();
-  const mailRef = React.useRef();
+  const telRef = React.useRef<HTMLInputElement>(null)
+  const mailRef = React.useRef<HTMLInputElement>(null)
   searchParams.set("tel", tel);
   searchParams.set("mail", mail);
   
@@ -44,12 +44,12 @@ export default function OrderContacts() {
       <form action="">
 
         <div className={css["input-block"]}>
-          <input ref={telRef} className={telValidation && wrongForm ? css.warning : ""} onChange={() => setTel(telRef.current.value)} type="tel" placeholder="Телефон" value={tel} />
+          <input ref={telRef} className={telValidation && wrongForm ? css.warning : ""} onChange={() => setTel(String(telRef.current?.value))} type="tel" placeholder="Телефон" value={tel} />
           {telValidation && wrongForm && <label className={css.warning}>Телефон должен содержать знак "+", быть нужной длины и не иметь запрещённых символов</label>}
         </div>
 
         <div className={css["input-block"]}>
-          <input ref={mailRef} className={mailValidation && wrongForm ? css.warning : ""} onChange={() => setMail(mailRef.current.value)} type="email" placeholder="E-mail" value={mail} />
+          <input ref={mailRef} className={mailValidation && wrongForm ? css.warning : ""} onChange={() => setMail(String(mailRef.current?.value))} type="email" placeholder="E-mail" value={mail} />
           {mailValidation && wrongForm && <label className={css.warning}>e-mail должен содержать знак "@", точку, быть нужной длины и не иметь запрещённых символов</label>}
         </div>
         

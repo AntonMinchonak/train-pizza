@@ -12,12 +12,12 @@ export default function OrderAdress() {
 
   let dateNow = new Date();
   let [time, setTime] = React.useState(searchParams.get("time") || dateNow.toISOString().slice(0, 10));
-  let dateMax = dateNow.toISOString().slice(0, 10).split("-");
+  let dateMax: (string|number)[] | string = dateNow.toISOString().slice(0, 10).split("-");
   dateMax[2] = +dateMax[2] + 4;
   dateMax = dateMax.join("-");
 
   let timeParse = time.split('-')
-  let dateOrder = new Date(timeParse[0], timeParse[1]-1, timeParse[2], orderHour, orderMinute).getTime()
+  let dateOrder = new Date(+timeParse[0], +timeParse[1]-1, +timeParse[2], +orderHour, +orderMinute).getTime()
 
   if (orderMinute > 59) {
     setOrderMinute(+orderMinute -59);
@@ -37,7 +37,7 @@ export default function OrderAdress() {
   }
 
   if (dateOrder - dateNow.getTime() < 1800000) {
-    const timeOrder = orderHour * 60 + orderMinute;
+    const timeOrder = +orderHour * 60 + ~~orderMinute;
     const minutes = timeOrder % 60;
     const hours = Math.trunc(timeOrder / 60);
     if (dateOrder - dateNow.getTime() < 180000) setOrderHour(hours + 1);
@@ -54,23 +54,23 @@ export default function OrderAdress() {
   let houseValidate = house.length < 1;
   let roomValidate = room.length < 1;
 
-  const cityRef = React.useRef();
-  const streetRef = React.useRef();
-  const houseRef = React.useRef();
-  const roomRef = React.useRef();
-  const hourRef = React.useRef();
-  const minuteRef = React.useRef();
-  const timeRef = React.useRef();
+  const cityRef = React.useRef<HTMLInputElement>(null);
+  const streetRef = React.useRef<HTMLInputElement>(null);
+  const houseRef = React.useRef<HTMLInputElement>(null);
+  const roomRef = React.useRef<HTMLInputElement>(null);
+  const hourRef = React.useRef<HTMLInputElement>(null);
+  const minuteRef = React.useRef<HTMLInputElement>(null);
+  const timeRef = React.useRef<HTMLInputElement>(null);
   
   searchParams.set("city", city);
   searchParams.set("street", street);
   searchParams.set("house", house);
   searchParams.set("room", room);
-  searchParams.set("orderHour", orderHour);
-  searchParams.set("orderMinute", orderMinute);
+  searchParams.set("orderHour", String(orderHour));
+  searchParams.set("orderMinute", String(orderMinute));
   searchParams.set("time", time);
-  searchParams.set("paper", searchParams.get("paper"));
-  searchParams.set("place", searchParams.get("place"));
+  searchParams.set("paper", searchParams.get("paper") || "");
+  searchParams.set("place", searchParams.get("place") || "");
 
   return (
     <div className={css.container + " container"}>
@@ -83,7 +83,7 @@ export default function OrderAdress() {
           <input
             className={wrongForm && cityValidate ? css.warning : ""}
             ref={cityRef}
-            onChange={() => setCity(cityRef.current.value)}
+            onChange={() => setCity(String(cityRef.current?.value))}
             type="text"
             list="city-list"
             placeholder="Выберите город"
@@ -105,7 +105,7 @@ export default function OrderAdress() {
         <div className={css["input-block"]}>
           <input
             className={wrongForm && streetValidate ? css.warning : ""}
-            onChange={() => setStreet(streetRef.current.value)}
+            onChange={() => setStreet(String(streetRef.current?.value))}
             ref={streetRef}
             type="text"
             placeholder="Улица"
@@ -117,21 +117,21 @@ export default function OrderAdress() {
 
         <div className={css["row-inputs"]}>
           <div className={css["input-block"]}>
-            <input className={wrongForm && houseValidate ? css.warning : ""} onChange={() => setHouse(houseRef.current.value)} ref={houseRef} type="text" placeholder="Дом" value={house} required />
+            <input className={wrongForm && houseValidate ? css.warning : ""} onChange={() => setHouse(String(houseRef.current?.value))} ref={houseRef} type="text" placeholder="Дом" value={house} required />
             {houseValidate && wrongForm && <label className={css.warning}>Номер дома должен содержать не менее одного символа</label>}
           </div>
           <div className={css["input-block"]}>
-            <input className={wrongForm && roomValidate ? css.warning : ""} onChange={() => setRoom(roomRef.current.value)} ref={roomRef} type="text" placeholder="Квартира" value={room} required />
+            <input className={wrongForm && roomValidate ? css.warning : ""} onChange={() => setRoom(String(roomRef.current?.value))} ref={roomRef} type="text" placeholder="Квартира" value={room} required />
             {roomValidate && wrongForm && <label className={css.warning}>Номер дома должен содержать не менее одного символа</label>}
           </div>
         </div>
 
         <div className={css["row-inputs--date"]}>
-          <input ref={timeRef} onChange={() => setTime(timeRef.current.value)} type="date" name="" id="" value={time} min={dateNow.toISOString().slice(0, 10)} max={dateMax} />
+          <input ref={timeRef} onChange={() => setTime(String(timeRef.current?.value))} type="date" name="" id="" value={time} min={dateNow.toISOString().slice(0, 10)} max={dateMax} />
           <div>
-            <input ref={hourRef} onChange={() => setOrderHour(+hourRef.current.value)} type="number" min={-1} max="24" name="" id="" value={orderHour} />
+            <input ref={hourRef} onChange={() => setOrderHour(Number(hourRef.current?.value))} type="number" min={-1} max="24" name="" id="" value={orderHour} />
             <span> : </span>
-            <input ref={minuteRef} onChange={() => setOrderMinute(+minuteRef.current.value)} type="number" min={"-1"} max="60" name="" id="" value={orderMinute} />
+            <input ref={minuteRef} onChange={() => setOrderMinute(Number(minuteRef.current?.value))} type="number" min={"-1"} max="60" name="" id="" value={orderMinute} />
           </div>
         </div>
 

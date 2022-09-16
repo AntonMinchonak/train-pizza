@@ -1,8 +1,15 @@
+
 import React from 'react'
 import { useDispatch } from "react-redux";
-import { setTotalOfferCount, setTotalOfferPrice, setCartList } from "../redux/slices/itemListSlice";
+import { cartItemType } from '../App';
+import { setTotalOfferCount, setTotalOfferPrice, setCartList, removeItemCartList } from "../redux/slices/itemListSlice";
 
-export default function CartBlock({ info, order }) {
+type CartBlockProps = {
+  info: cartItemType;
+  order?: Boolean;
+}
+
+export default function CartBlock({ info, order }:CartBlockProps) {
   const typeList = ["тонкое","традиционное"]
   const dispatch = useDispatch();
 
@@ -23,7 +30,7 @@ export default function CartBlock({ info, order }) {
           {!order && (
             <div
               onClick={() => {
-                dispatch(setCartList({ newItem: info, size: info.size, type: info.type, remove: true }));
+                dispatch(removeItemCartList({ newItem: info, size: info.size, type: info.type }));
                 dispatch(setTotalOfferCount());
                 dispatch(setTotalOfferPrice());
               }}
@@ -72,7 +79,7 @@ export default function CartBlock({ info, order }) {
         {!order && (
           <div
             onClick={() => {
-              dispatch(setCartList({ newItem: info, size: info.size, type: info.type, remove: true, fullRemove: true }));
+              dispatch(removeItemCartList({ newItem: info, size: info.size, type: info.type, fullRemove: true }));
               dispatch(setTotalOfferCount());
               dispatch(setTotalOfferPrice());
             }}

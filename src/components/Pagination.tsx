@@ -1,12 +1,15 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'; 
 import { setPage } from '../redux/slices/itemListSlice';
+import { RootState } from '../redux/store';
 
-export default function Pagination({ scrollBack, upper }) {
+type PaginationProps = { scrollBack: ()=>void; upper?: Boolean; }
+
+export default function Pagination({ scrollBack, upper }:PaginationProps) {
 
   const dispatch = useDispatch()
-  const currentPage = useSelector(state => state.list.currentPage)
-  const filteredList = useSelector((state) => state.list.filteredList);
+  const currentPage = useSelector((state: RootState) => state.list.currentPage)
+  const filteredList = useSelector((state: RootState) => state.list.filteredList);
 
     return (
       <div className="pagination">

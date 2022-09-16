@@ -1,14 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import CartBlock from '../components/CartBlock.jsx';
+import CartBlock from '../components/CartBlock';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { setCartList, setTotalOfferCount, setTotalOfferPrice } from "../redux/slices/itemListSlice.js";
+import { setTotalOfferCount, setTotalOfferPrice,clearCartList } from "../redux/slices/itemListSlice";
+import { cartItemType } from "../App";
+import { RootState } from '../redux/store';
+
+
 
 export default function Cart() {
   const dispatch = useDispatch();
-  const cartList = useSelector(state => state.list.cartList);
-  const totalOfferPrice = useSelector((state) => state.list.totalOfferPrice);
-  const totalOfferCount = useSelector((state) => state.list.totalOfferCount);
+  const cartList = useSelector((state: RootState) => state.list.cartList);
+  const totalOfferPrice = useSelector((state: RootState) => state.list.totalOfferPrice);
+  const totalOfferCount = useSelector((state: RootState) => state.list.totalOfferCount);
   
   return (
     <div className="container container--cart">
@@ -51,7 +55,7 @@ export default function Cart() {
           </h2>
           <div
             onClick={() => {
-              dispatch(setCartList({ clear: true }));
+              dispatch(clearCartList());
               dispatch(setTotalOfferCount());
               dispatch(setTotalOfferPrice());
             }}
@@ -74,7 +78,7 @@ export default function Cart() {
           </div>
         </div>
         <div className="content__items-cart">
-          {cartList.map((item, i) => (
+          {cartList.map((item:cartItemType, i:number) => (
             <CartBlock key={i} info={item} />
           ))}
         </div>
@@ -97,8 +101,8 @@ export default function Cart() {
             </Link>
             <Link onClick={() => {
               sessionStorage.setItem("cartList", JSON.stringify(cartList))
-              sessionStorage.setItem("totalOfferPrice", totalOfferPrice);
-              sessionStorage.setItem("totalOfferCount", totalOfferCount);
+              sessionStorage.setItem("totalOfferPrice", String(totalOfferPrice));
+              sessionStorage.setItem("totalOfferCount", String(totalOfferCount));
             }} to={cartList.length > 0 ? "/order-adress" : "/cart"} className="button pay-btn">
               <span>Перейти к заказу</span>
             </Link>

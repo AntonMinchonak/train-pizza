@@ -8,8 +8,12 @@ export default function OrderPayment() {
 
   let [searchParams] = useSearchParams();
 
-  let oldParams = [JSON.parse(searchParams.get("paper")), JSON.parse(searchParams.get("place"))];
-  if (oldParams[0] === null) { oldParams[0] = true; oldParams[1] = true};
+  let oldParams= [true, true];
+  let oldPaper = searchParams.get("paper")
+  let oldPlace = searchParams.get("place")
+  if (oldPaper && oldPlace) {
+    oldParams = [!!JSON.parse(oldPaper), !!JSON.parse(oldPlace)];
+  }
   let [paper, setPaper] = React.useState(oldParams[0]);
   let [place, setPlace] = React.useState(oldParams[1]);
 
@@ -18,18 +22,18 @@ export default function OrderPayment() {
   let [nameCard, setNameCard] = React.useState("");
   let [expire, setExpire] = React.useState("");
 
-  const paperRef = React.useRef();
-  const cardRef = React.useRef();
-  const placeRef = React.useRef();
-  const onlineRef = React.useRef();
+  const paperRef = React.useRef<HTMLInputElement>(null)
+  const cardRef = React.useRef<HTMLInputElement>(null)
+  const placeRef = React.useRef<HTMLInputElement>(null)
+  const onlineRef = React.useRef<HTMLInputElement>(null)
 
-  const numCardRef = React.useRef();
-  const cvvRef = React.useRef();
-  const nameCardRef = React.useRef();
-  const expireRef = React.useRef();
+  const numCardRef = React.useRef<HTMLInputElement>(null);
+  const cvvRef = React.useRef<HTMLInputElement>(null);
+  const nameCardRef = React.useRef<HTMLInputElement>(null);
+  const expireRef = React.useRef<HTMLInputElement>(null);
 
-  searchParams.set("paper", paper);
-  searchParams.set("place", place);
+  searchParams.set("paper", String(paper));
+  searchParams.set("place", String(place));
 
 
   return (
@@ -65,10 +69,10 @@ export default function OrderPayment() {
         )}
         {!place && !paper && (
           <div className={css.bank}>
-            <input ref={numCardRef} onChange={() => setNumCard(numCardRef.current.value)} type="text" placeholder="Номер карты" />
-            <input ref={expireRef} onChange={() => setExpire(expireRef.current.value)} type="text" placeholder="Срок действия карты" />
-            <input ref={cvvRef} onChange={() => setCvv(cvvRef.current.value)} type="text" placeholder="CVV-код" />
-            <input ref={nameCardRef} onChange={() => setNameCard(nameCardRef.current.value)} type="text" placeholder="Имя владельца" />
+            <input ref={numCardRef} onChange={() => setNumCard(String(numCardRef.current?.value))} type="text" placeholder="Номер карты" />
+            <input ref={expireRef} onChange={() => setExpire(String(expireRef.current?.value))} type="text" placeholder="Срок действия карты" />
+            <input ref={cvvRef} onChange={() => setCvv(String(cvvRef.current?.value))} type="text" placeholder="CVV-код" />
+            <input ref={nameCardRef} onChange={() => setNameCard(String(nameCardRef.current?.value))} type="text" placeholder="Имя владельца" />
           </div>
         )}
         <ButtonSubmit

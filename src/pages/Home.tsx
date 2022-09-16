@@ -5,14 +5,14 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from '../components/PizzaBlock';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
-
+import { pizzaItemType } from '../App';
+import { RootState } from '../redux/store';
 
 export default function Home() {
 
   const listCategory = ["Все", "Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"];
-  const activeFilter = useSelector((state) => state.list.activeFilter);
-  const list = useSelector((state) => state.list.list);
-  const page = useSelector((state) => state.list.pageList);
+  const activeFilter = useSelector((state:RootState) => state.list.activeFilter);
+  const page = useSelector((state:RootState) => state.list.pageList);
 
   const pageTitle = listCategory[activeFilter] + " питси";
 
@@ -23,7 +23,7 @@ export default function Home() {
     });
   }
   
-  let pizzas = page.map((item) => <PizzaBlock key={item.id} info={item} />)
+  let pizzas = page.map((item:pizzaItemType) => <PizzaBlock key={item.id} info={item} />)
   let skeleton = [...new Array(8)].map((_, i) => <Skeleton key={i} />) 
 
   return (
@@ -34,10 +34,10 @@ export default function Home() {
       </div>
       <div className="content__title-wrap">
         <h2 className="content__title">{pageTitle}</h2>
-        <Pagination upper scrollBack="" />
+        <Pagination upper scrollBack={scrollBack} />
       </div>
       <div className="content-items-wrap">
-        <div className="content__items">{list.length === 0 ? skeleton : pizzas}</div>
+        <div className="content__items">{page.length === 0 ? skeleton : pizzas}</div>
       </div>
       <Pagination scrollBack={scrollBack} />
     </div>
